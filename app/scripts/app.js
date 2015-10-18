@@ -1,8 +1,7 @@
 'use strict';
 
-
-angular
-  .module('photoApp', [
+angular.module('photoApp', [
+    'photoApp.services',
     'ngAnimate',
     'ngResource',
     'ngRoute',
@@ -11,8 +10,8 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
+        templateUrl: '../views/gallery.html',
+        controller: 'GalleryController',
         controllerAs: 'main'
       })
       .when('/about', {
