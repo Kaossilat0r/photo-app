@@ -10,7 +10,7 @@ angular.module('photoApp.services', [])
       {
         userList: [],
         tagList: [],
-        activeTags: [],
+        activeTagList: [],
         selectedUser: 1,
         reload: function () {
           $rootScope.$broadcast('galleryService.change');

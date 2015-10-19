@@ -5,7 +5,7 @@ angular.module('photoApp', [
     'ngAnimate',
     'ngResource',
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
   ])
   .config(function ($routeProvider) {
     $routeProvider
