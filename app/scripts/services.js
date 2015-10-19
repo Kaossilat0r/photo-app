@@ -9,6 +9,8 @@ angular.module('photoApp.services', [])
       var model =
       {
         userList: [],
+        tagList: [],
+        activeTags: [],
         selectedUser: 1,
         reload: function () {
           $rootScope.$broadcast('galleryService.change');
@@ -16,9 +18,17 @@ angular.module('photoApp.services', [])
         }
       };
 
-      $http.get(config.webservice + "/users")
+      $http.get(config.webservice + "/user")
         .success(function(data, status) {
           model.userList = data;
+        })
+        .error(function(data, status) {
+          console.log("GET /users failed: " + status);
+        });
+
+      $http.get(config.webservice + "/user/" + model.selectedUser + "/tags")
+        .success(function(data, status) {
+          model.tagList = data;
         })
         .error(function(data, status) {
           console.log("GET /users failed: " + status);

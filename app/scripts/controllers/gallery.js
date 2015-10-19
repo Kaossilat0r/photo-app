@@ -15,7 +15,7 @@ angular.module('photoApp')
       $http.get(config.webservice + "/user/" + $scope.galleryService.selectedUser + "/photo")
         .success(function(data, status) {
           $scope.pictures = data;
-          console.log(data);
+          //console.log(data);
         })
         .error(function(data, status) {
           console.log("GET /users failed: " + status);
