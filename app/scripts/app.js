@@ -16,8 +16,8 @@ angular.module('photoApp', [
         controllerAs: 'main'
       })
       .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
+        templateUrl: '../views/import.html',
+        controller: 'ImportController',
         controllerAs: 'about'
       })
       .otherwise({

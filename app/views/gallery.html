@@ -4,7 +4,7 @@
   <div class="col-md-3">
 
     <div class="list-group">
-      <button class="list-group-item"  type="button" ng-click="deactivateTag(tag)"
+      <button class="list-group-item active btn-xs"  type="button" ng-click="deactivateTag(tag)"
               ng-repeat="tag in galleryService.activeTagList">
         {{tag.name}}
       </button>
@@ -18,25 +18,22 @@
         {{tag.name}}
       </button>
     </div>
+
   </div>
-
-
 
   <div class="col-md-9">
     <div ng-hide="pictures.length">There are no pictures yet.</div>
 
+    <div ng-show="activeImage">
+      <img ng-src="{{activeImage.fullURL}}" width="600" />
+    </div>
+
     <div class="row" ng-repeat="twoPictures in pictures | groupBy:2">
       <div class="col-md-6" ng-repeat="p in twoPictures">
-          <img ng-src="{{p.thumbURL}}"/>
+          <img ng-click="ping(p)" class="img-responsive" ng-src="{{p.thumbURL}}"/>
       </div>
     </div>
+
   </div>
 
-  <!--
-  <ul class="col-md-9">
-    <li ng-repeat="p in pictures">
-      <img ng-src="{{p.thumbURL}}"/>
-    </li>
-  </ul>
--->
 </div>
