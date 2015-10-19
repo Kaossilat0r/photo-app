@@ -20,13 +20,23 @@
     </div>
   </div>
 
-  <div ng-hide="pictures.length">There are no pictures yet.</div>
 
 
+  <div class="col-md-9">
+    <div ng-hide="pictures.length">There are no pictures yet.</div>
+
+    <div class="row" ng-repeat="twoPictures in pictures | groupBy:2">
+      <div class="col-md-6" ng-repeat="p in twoPictures">
+          <img ng-src="{{p.thumbURL}}"/>
+      </div>
+    </div>
+  </div>
+
+  <!--
   <ul class="col-md-9">
     <li ng-repeat="p in pictures">
       <img ng-src="{{p.thumbURL}}"/>
     </li>
   </ul>
-
+-->
 </div>

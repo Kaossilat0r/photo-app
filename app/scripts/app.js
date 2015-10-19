@@ -6,6 +6,7 @@ angular.module('photoApp', [
     'ngResource',
     'ngRoute',
     'ngSanitize',
+    'angular.filter',
   ])
   .config(function ($routeProvider) {
     $routeProvider

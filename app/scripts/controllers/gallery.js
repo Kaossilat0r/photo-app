@@ -14,15 +14,15 @@ angular.module('photoApp')
       $scope.pictures = [];
 
       $scope.getPictures = function() {
-        var request = [];
+        var tagIds = [];
         angular.forEach(galleryService.activeTagList, function (tag) {
-          request.push(tag.id);
+          tagIds.push(tag.id);
         });
 
-        console.log(request);
+        console.log(tagIds);
 
         $http.post(config.webservice + "/user/"
-          + $scope.galleryService.selectedUser + "/photo", request)
+          + $scope.galleryService.selectedUser + "/photo", tagIds)
           .success(function (data, status) {
             $scope.pictures = data;
             //console.log(data);
