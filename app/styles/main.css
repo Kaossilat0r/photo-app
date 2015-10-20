@@ -122,10 +122,23 @@ body {
 
  /* active image */
 #activeImage {
-  margin-bottom: 10px;
+  width: 570px;
+  margin-bottom: 20px;
+  padding: 5px;
 }
 
 #activeImage img {
+  display: block;
+  margin: auto;
+}
+
+/* individual image */
+.thumbImage {
+  padding : 5px;
+}
+
+.thumbImageContainer {
+  width: 570px;
   display: block;
   margin: auto;
 }

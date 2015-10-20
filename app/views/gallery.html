@@ -1,41 +1,46 @@
 <div class="row">
   <div class="col-md-3">
 
-    <div class="list-group">
-      <button class="list-group-item active btn-xs" type="button" ng-click="deactivateTag(tag)"
-              ng-repeat="tag in galleryService.activeTagList">
-        {{tag.name}}
-      </button>
+    <div>
+      <div class="list-group">
+        <button class="list-group-item active btn-xs" type="button" ng-click="deactivateTag(tag)"
+                ng-repeat="tag in galleryService.activeTagList">
+          {{tag.name}}
+        </button>
+      </div>
+
+      <input class="form-control" type="search" ng-model="search" placeholder="filter tags ..."/>
+
+      <div class="list-group">
+        <button class="list-group-item" type="button" ng-click="activateTag(tag)"
+                ng-repeat="tag in galleryService.tagList | orderBy:'name' | filter:search">
+          {{tag.name}}
+        </button>
+      </div>
     </div>
 
-    <input class="form-control" type="search" ng-model="search" placeholder="filter tags ..."/>
-
-    <div class="list-group">
-      <button class="list-group-item" type="button" ng-click="activateTag(tag)"
-              ng-repeat="tag in galleryService.tagList | orderBy:'name' | filter:search">
-        {{tag.name}}
-      </button>
-    </div>
+    <p>Add more photos.</p>
 
 
-    <p>Add new photos.</p>
+    <div class="btn-group btn-group-lg">
 
-
-
-    <span class="file-input btn btn-primary btn-file">
+    <span class="file-input btn btn-default btn-file">
       Browse..<input class="btn btn-default btn-xs" type="file"
                      id="file" name="file" multiple/>
     </span>
     <button class="btn btn-primary" ng-click="addPhoto()">Add</button>
 
+    </div>
+
   </div>
 
   <div class="col-md-9">
-    <div ng-hide="pictures.length"><p>There are no pictures yet.</p></div>
+    <div ng-hide="pictures.length"><p>There are no photos yet.</p></div>
 
     <div id="activeImage" ng-show="activeImage">
 
-      <img ng-src="{{activeImage.fullURL}}" ng-click="toggleActiveImage(activeImage)" width="600"/>
+      <img ng-src="{{activeImage.fullURL}}" ng-click="toggleActiveImage(activeImage)"
+           width="590"/>
 
       <div class="btn-group">
         <button ng-click="loadTags(activeImage)" class="btn btn-default">Load Tags</button>
@@ -45,9 +50,11 @@
 
     </div>
 
-    <div class="row" ng-repeat="twoPictures in pictures | groupBy:2">
-      <div class="col-md-6" ng-repeat="p in twoPictures">
-        <img ng-click="toggleActiveImage(p)" class="img-responsive" ng-src="{{p.thumbURL}}"/>
+    <div class="thumbImageContainer">
+      <div class="row" ng-repeat="twoPictures in pictures | groupBy:2">
+        <div class="thumbImage col-md-6" ng-repeat="p in twoPictures">
+          <img ng-click="toggleActiveImage(p)" class="img-responsive" ng-src="{{p.thumbURL}}"/>
+        </div>
       </div>
     </div>
 
