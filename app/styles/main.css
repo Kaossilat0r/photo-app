@@ -142,3 +142,8 @@ body {
   display: block;
   margin: auto;
 }
+
+/* always show scrollbar */
+body{
+  overflow-y:scroll;
+}
