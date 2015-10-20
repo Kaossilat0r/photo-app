@@ -34,7 +34,15 @@
     <div ng-hide="pictures.length"><p>There are no pictures yet.</p></div>
 
     <div id="activeImage" ng-show="activeImage">
+
       <img ng-src="{{activeImage.fullURL}}" ng-click="toggleActiveImage(activeImage)" width="600"/>
+
+      <div class="btn-group">
+        <button ng-click="loadTags(activeImage)" class="btn btn-default">Load Tags</button>
+        <button ng-click="updateTags(activeImage)" class="btn btn-default">Update Tags</button>
+        <button ng-click="deletePhoto(activeImage)" class="btn btn-default btn-danger">Delete</button>
+      </div>
+
     </div>
 
     <div class="row" ng-repeat="twoPictures in pictures | groupBy:2">

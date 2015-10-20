@@ -48,6 +48,25 @@ angular.module('photoApp')
         galleryService.activeTagList.splice(galleryService.activeTagList.indexOf(tag),1);
         $scope.getPhotos();
       };
+      $scope.loadTags = function(p) {
+        galleryService.activeTagList = p.tags;
+      };
+      $scope.updateTags = function(p) {
+        p.tags = galleryService.activeTagList;
+
+        var url = config.webservice + "/user/" + $scope.galleryService.selectedUser
+          + "/photo/" + p.id;
+
+        $http.post(url, p)
+          .success(function (data, status) {
+            console.log("photo deleted.");
+            $scope.activeImage = null;
+            $scope.getPhotos();
+          })
+          .error(function (data, status) {
+            console.log("POST " + url + " failed: " + status);
+          });
+      }
 
       $scope.addPhoto = function(){
 
@@ -82,6 +101,22 @@ angular.module('photoApp')
 
         }
 
+      };
+
+      $scope.deletePhoto = function(p) {
+
+        var url = config.webservice + "/user/" + $scope.galleryService.selectedUser
+          + "/photo/" + p.id;
+
+        $http.delete(url)
+          .success(function (data, status) {
+            console.log("photo deleted.");
+            $scope.activeImage = null;
+            $scope.getPhotos();
+          })
+          .error(function (data, status) {
+            console.log("DELETE " + url + " failed: " + status);
+          });
       };
 
       $scope.toggleActiveImage = function(picture) {
