@@ -21,15 +21,11 @@ angular.module('photoApp')
           tagIds.push(tag.id);
         });
 
-        console.log(config.webservice + "/user/"
-          + $scope.galleryService.selectedUser + "/photo/byTag" + "  -- "
-          + $scope.galleryService.selectedUser + " - " + tagIds);
-
         $http.post(config.webservice + "/user/"
           + $scope.galleryService.selectedUser + "/photo/byTag", tagIds)
           .success(function (data, status) {
             $scope.pictures = data;
-            console.log(data);
+            //console.log(data);
 
           })
           .error(function (data, status) {
@@ -77,19 +73,30 @@ angular.module('photoApp')
 
         $http.post(url, p)
           .success(function (data, status) {
-            console.log("photo deleted.");
+            //console.log("photo deleted.");
             $scope.activeImage = null;
             $scope.getPhotos();
           })
           .error(function (data, status) {
             console.log("POST " + url + " failed: " + status);
           });
-      }
+      };
+      $scope.addTag = function(tagName) {
+        var newTag = {name : tagName};
+        var url = config.webservice + "/user/" + $scope.galleryService.selectedUser
+          + "/tags";
+
+        $http.post(url, newTag)
+          .success(function (data, status) {
+            //console.log("added tag.");
+            galleryService.getTags();
+          })
+          .error(function (data, status) {
+            console.log("POST " + url + " failed: " + status);
+          });
+      };
 
       $scope.addPhoto = function(){
-
-        console.log("adding photo...");
-
         var files = document.getElementById('file').files;
         for (var i = 0; i < files.length; i++) {
           var request = {
@@ -128,7 +135,6 @@ angular.module('photoApp')
 
         $http.delete(url)
           .success(function (data, status) {
-            console.log("photo deleted.");
             $scope.activeImage = null;
             $scope.getPhotos();
           })

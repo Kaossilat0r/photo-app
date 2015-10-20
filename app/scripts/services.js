@@ -15,6 +15,15 @@ angular.module('photoApp.services', [])
         reload: function () {
           $rootScope.$broadcast('galleryService.change');
           $route.reload();
+        },
+        getTags: function() {
+          $http.get(config.webservice + "/user/" + model.selectedUser + "/tags")
+            .success(function (data, status) {
+              model.tagList = data;
+            })
+            .error(function (data, status) {
+              console.log("GET /user/{id}/tags failed: " + status);
+            });
         }
       };
 
@@ -28,14 +37,9 @@ angular.module('photoApp.services', [])
           console.log("GET /user failed: " + status);
         });
 
-      $http.get(config.webservice + "/user/" + model.selectedUser + "/tags")
-        .success(function(data, status) {
-          model.tagList = data;
-        })
-        .error(function(data, status) {
-          console.log("GET /user/{id}/tags failed: " + status);
-        });
 
+
+      model.getTags();
       return model;
     }
   ])

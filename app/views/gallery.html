@@ -10,7 +10,12 @@
         </button>
       </div>
 
-      <input class="form-control" type="search" ng-model="search" placeholder="filter tags ..."/>
+      <div class="input-group">
+        <div class="input-group-btn">
+          <button class="btn btn-primary" ng-show="search" ng-click="addTag(search)">Add</button>
+        </div>
+        <input class="form-control" type="search" ng-model="search" placeholder="filter tags ..."/>
+      </div>
 
       <div class="list-group">
         <button class="list-group-item  btn-xs" type="button" ng-click="activateTag(tag)"
