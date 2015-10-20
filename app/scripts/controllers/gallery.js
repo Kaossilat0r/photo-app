@@ -38,18 +38,36 @@ angular.module('photoApp')
 
       };
 
+        Array.prototype.remove = function(val) {
+          var i = this.indexOf(val);
+          return i>-1 ? this.splice(i, 1) : [];
+        };
+
+
       $scope.activateTag = function(tag) {
-        galleryService.activeTagList.push(tag);
-        galleryService.tagList.splice(galleryService.tagList.indexOf(tag),1);
-        $scope.getPhotos();
+        // if not container
+          galleryService.activeTagList.push(tag);
+          galleryService.tagList.remove(tag);
+          $scope.getPhotos();
       };
       $scope.deactivateTag = function(tag) {
-        galleryService.tagList.push(tag);
-        galleryService.activeTagList.splice(galleryService.activeTagList.indexOf(tag),1);
-        $scope.getPhotos();
+        // if not contained
+        if (galleryService.tagList.indexOf(tag) == -1
+            && galleryService.activeTagList.indexOf(tag) != -1) {
+          galleryService.tagList.push(tag);
+          galleryService.activeTagList.remove(tag);
+          $scope.getPhotos();
+        }
       };
       $scope.loadTags = function(p) {
-        galleryService.activeTagList = p.tags;
+        angular.forEach(p.tags, function(tag) {
+          // a small workaround because the tags are in different objects
+          angular.forEach(galleryService.tagList, function(galleryTag) {
+              if(tag.id == galleryTag.id) {
+                $scope.activateTag(galleryTag);
+              }
+            });
+        });
       };
       $scope.updateTags = function(p) {
         p.tags = galleryService.activeTagList;
