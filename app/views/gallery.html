@@ -2,7 +2,8 @@
   <div class="col-md-3">
 
     <div>
-      <div class="list-group">
+      <div ng-show="galleryService.activeTagList.length" class="list-group">
+        <p>Active Tags</p>
         <button class="list-group-item active btn-xs" type="button" ng-click="deactivateTag(tag)"
                 ng-repeat="tag in galleryService.activeTagList">
           {{tag.name}}
@@ -35,7 +36,9 @@
   </div>
 
   <div class="col-md-9">
-    <div ng-hide="pictures.length"><p>There are no photos yet.</p></div>
+    <div ng-hide="pictures.length"class="alert alert-info" role="alert"><p>
+      There are no photos yet.
+    </p></div>
 
     <div id="activeImage" ng-show="activeImage">
 
