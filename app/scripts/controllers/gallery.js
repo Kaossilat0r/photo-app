@@ -21,12 +21,13 @@ angular.module('photoApp')
           tagIds.push(tag.id);
         });
 
+        console.log($scope.galleryService.selectedUser + " - " + tagIds);
+
         $http.post(config.webservice + "/user/"
           + $scope.galleryService.selectedUser + "/photo/byTag", tagIds)
           .success(function (data, status) {
-
             $scope.pictures = data;
-            //console.log(data);
+            console.log(data);
 
           })
           .error(function (data, status) {
@@ -48,6 +49,8 @@ angular.module('photoApp')
 
       $scope.addPhoto = function(){
 
+        console.log("adding photo...");
+
         var files = document.getElementById('file').files;
         for (var i = 0; i < files.length; i++) {
           var request = {
@@ -62,22 +65,22 @@ angular.module('photoApp')
           request.thumbURL = request.fullURL.replace(".jpg", "_th.png");
           request.tags = galleryService.activeTagList;
 
-          //console.log(request);
+          console.log(request);
 
           $http.post(config.webservice + "/user/"
-            + $scope.galleryService.selectedUser + "/photo", request)
+            + galleryService.selectedUser + "/photo", request)
             .success(function (data, status) {
-
-              console.log("added photo.");
+              console.log("added photo.  " +config.webservice + "/user/"
+                + galleryService.selectedUser + "/photo");
+              $scope.getPhotos();
             })
             .error(function (data, status) {
               console.log("POST /users/{id}/photo failed: " + status);
             });
 
-          $scope.getPhotos();
+
         }
 
-        $scope.getPhotos()
       };
 
       $scope.ping = function(picture) {
