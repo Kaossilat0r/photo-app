@@ -19,10 +19,18 @@
       </button>
     </div>
 
+
+    <p>Add new photos.</p>
+
+    <span class="file-input btn btn-primary btn-file">
+      Browse..<input class="btn btn-default btn-xs" type="file"
+                    id="file" name="file" multiple/>
+    </span>
+    <button class="btn btn-primary" ng-click="addPhoto()">Add</button>
   </div>
 
   <div class="col-md-9">
-    <div ng-hide="pictures.length">There are no pictures yet.</div>
+    <div ng-hide="pictures.length"><p>There are no pictures yet.</p></div>
 
     <div ng-show="activeImage">
       <img ng-src="{{activeImage.fullURL}}" width="600" />

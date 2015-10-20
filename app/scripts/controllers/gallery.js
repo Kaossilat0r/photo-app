@@ -6,15 +6,16 @@ angular.module('photoApp')
     'galleryService',
     '$scope',
     '$http',
+    '$route',
     'config',
-    function (galleryService,$scope,$http,config) {
+    function (galleryService,$scope,$http,$route,config) {
 
       $scope.galleryService = galleryService;
 
       $scope.pictures = [];
       $scope.activeImage = null;
 
-      $scope.getPictures = function() {
+      $scope.getPhotos = function() {
         var tagIds = [];
         angular.forEach(galleryService.activeTagList, function (tag) {
           tagIds.push(tag.id);
@@ -23,8 +24,10 @@ angular.module('photoApp')
         $http.post(config.webservice + "/user/"
           + $scope.galleryService.selectedUser + "/photo/byTag", tagIds)
           .success(function (data, status) {
+
             $scope.pictures = data;
             //console.log(data);
+
           })
           .error(function (data, status) {
             console.log("POST /user/{id}/photo/byTag failed: " + status);
@@ -35,12 +38,46 @@ angular.module('photoApp')
       $scope.activateTag = function(tag) {
         galleryService.activeTagList.push(tag);
         galleryService.tagList.splice(galleryService.tagList.indexOf(tag),1);
-        $scope.getPictures();
+        $scope.getPhotos();
       };
       $scope.deactivateTag = function(tag) {
         galleryService.tagList.push(tag);
         galleryService.activeTagList.splice(galleryService.activeTagList.indexOf(tag),1);
-        $scope.getPictures();
+        $scope.getPhotos();
+      };
+
+      $scope.addPhoto = function(){
+
+        var files = document.getElementById('file').files;
+        for (var i = 0; i < files.length; i++) {
+          var request = {
+            fullURL : null,
+            thumbURL : null,
+            tags : []
+          };
+          // i'm cheating here since the files are already in the image folder
+          var file = files[i];
+
+          request.fullURL = "images/" + file.name;
+          request.thumbURL = request.fullURL.replace(".jpg", "_th.png");
+          request.tags = galleryService.activeTagList;
+
+          //console.log(request);
+
+          $http.post(config.webservice + "/user/"
+            + $scope.galleryService.selectedUser + "/photo", request)
+            .success(function (data, status) {
+
+              console.log("added photo.");
+            })
+            .error(function (data, status) {
+              console.log("POST /users/{id}/photo failed: " + status);
+            });
+
+          $scope.getPhotos();
+        }
+
+        $scope.getPhotos()
       };
 
       $scope.ping = function(picture) {
@@ -51,7 +88,7 @@ angular.module('photoApp')
         }
       };
 
-      $scope.getPictures();
+      $scope.getPhotos();
 
     }])
   .controller('ImportController', [
@@ -63,35 +100,7 @@ angular.module('photoApp')
 
       $scope.galleryService = galleryService;
 
-      $scope.addPhoto = function(){
 
-        var files = document.getElementById('file').files;
-        for (var i = 0; i < files.length; i++) {
-          var request = {
-            fullURL : null,
-            thumbURL : null
-          };
-          // i'm cheating here since the files are already in the image folder
-          var file = files[i];
-
-          request.fullURL = "images/" + file.name;
-          request.thumbURL = request.fullURL.replace(".jpg", "_th.png");
-
-          console.log(request);
-
-          $http.post(config.webservice + "/user/"
-            + $scope.galleryService.selectedUser + "/photo", request)
-            .success(function (data, status) {
-              console.log("added photo.");
-            })
-            .error(function (data, status) {
-              console.log("POST /users/{id}/photo failed: " + status);
-            });
-        }
-
-
-
-      };
 
     }
   ])

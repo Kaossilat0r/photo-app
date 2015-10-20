@@ -18,7 +18,7 @@ angular.module('photoApp', [
       .when('/about', {
         templateUrl: '../views/import.html',
         controller: 'ImportController',
-        controllerAs: 'about'
+        controllerAs: 'import'
       })
       .otherwise({
         redirectTo: '/'
