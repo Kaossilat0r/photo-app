@@ -25,7 +25,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li>
               <select class="form-control" ng-model="galleryService.selectedUser"
-                      ng-options="user.id as user.name for user in galleryService.userList"
+                      ng-options="user.id as user.name for user in galleryService.userList | orderBy:'name'"
                       ng-change="galleryService.reload()"></select>
             </li>
           </ul>

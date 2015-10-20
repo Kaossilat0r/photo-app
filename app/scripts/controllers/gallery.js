@@ -21,7 +21,9 @@ angular.module('photoApp')
           tagIds.push(tag.id);
         });
 
-        console.log($scope.galleryService.selectedUser + " - " + tagIds);
+        console.log(config.webservice + "/user/"
+          + $scope.galleryService.selectedUser + "/photo/byTag" + "  -- "
+          + $scope.galleryService.selectedUser + " - " + tagIds);
 
         $http.post(config.webservice + "/user/"
           + $scope.galleryService.selectedUser + "/photo/byTag", tagIds)
@@ -62,7 +64,7 @@ angular.module('photoApp')
           var file = files[i];
 
           request.fullURL = "images/" + file.name;
-          request.thumbURL = request.fullURL.replace(".jpg", "_th.png");
+          request.thumbURL = "images/th/" + file.name.replace(".jpg", ".png");
           request.tags = galleryService.activeTagList;
 
           console.log(request);
@@ -78,12 +80,11 @@ angular.module('photoApp')
               console.log("POST /users/{id}/photo failed: " + status);
             });
 
-
         }
 
       };
 
-      $scope.ping = function(picture) {
+      $scope.toggleActiveImage = function(picture) {
         if ($scope.activeImage == picture) {
           $scope.activeImage = null;
         } else {
