@@ -33,7 +33,7 @@
   <div class="col-md-9">
     <div ng-hide="pictures.length"><p>There are no pictures yet.</p></div>
 
-    <div ng-show="activeImage">
+    <div id="activeImage" ng-show="activeImage">
       <img ng-src="{{activeImage.fullURL}}" ng-click="toggleActiveImage(activeImage)" width="600"/>
     </div>
 

@@ -89,6 +89,7 @@ angular.module('photoApp')
           $scope.activeImage = null;
         } else {
           $scope.activeImage = picture;
+          $("html,body").animate({ scrollTop: 0 }, "slow");
         }
       };
 
